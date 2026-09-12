@@ -22,9 +22,9 @@ Aplicação web que permite buscar animes em tempo real e visualizar detalhes co
 - Tratamento de erros: mensagens amigáveis para buscas sem resultado ou falhas de conexão, com nova tentativa automática em erros temporários da API
 
 ## Como executar localmente
-1. Clone: `git clone https://github.com/kauahenrique-create/bootcamp2-app.git`
+1. Clone: `git clone https://github.com/kauahenrique-create/REPOSITORIO.git`
 2. Abra o arquivo `index.html` no navegador
 
 ## Links
-- **Aplicação no ar (GitHub Pages):** https://kauahenrique-create.github.io/bootcamp2-app/
-- **Repositório:** https://github.com/kauahenrique-create/bootcamp2-app
+- **Aplicação no ar (GitHub Pages):** https://kauahenrique-create.github.io/REPOSITORIO/
+- **Repositório:** https://github.com/kauahenrique-create/REPOSITORIO
