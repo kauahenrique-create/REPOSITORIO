@@ -10,6 +10,8 @@ const areaStatus = document.getElementById("status-area");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalConteudo = document.getElementById("modal-conteudo");
 const modalFechar = document.getElementById("modal-fechar");
+const btnLimpar = document.getElementById("btn-limpar");
+const btnInicio = document.getElementById("btn-inicio");
  
 let ultimosResultados = []; // guarda os dados da última busca para abrir no modal sem nova requisição
  
@@ -128,6 +130,15 @@ async function buscarAnimes(termo, tentativa = 1) {
       return;
     }
  
+    // AQUI ENTRA A REGRA DO BOTÃO VOLTAR:
+    if (btnLimpar) {
+      if (termo.toLowerCase() !== "frieren") {
+        btnLimpar.hidden = false;
+      } else {
+        btnLimpar.hidden = true;
+      }
+    }
+ 
     ultimosResultados = lista;
     esconderStatus();
     renderizarGrid(lista);
@@ -213,6 +224,14 @@ function fecharModal() {
   modalConteudo.innerHTML = "";
 }
  
+// ---- Função para resetar e voltar para o início ----
+function resetarParaInicio(evento) {
+  if (evento) evento.preventDefault();
+  campoBusca.value = "";
+  if (btnLimpar) btnLimpar.hidden = true;
+  buscarAnimes("Frieren");
+}
+ 
 // ---- Eventos ----
 form.addEventListener("submit", (evento) => {
   evento.preventDefault();
@@ -243,6 +262,8 @@ document.addEventListener("keydown", (evento) => {
   if (evento.key === "Escape" && !modalOverlay.hidden) fecharModal();
 });
  
+if (btnLimpar) btnLimpar.addEventListener("click", resetarParaInicio);
+if (btnInicio) btnInicio.addEventListener("click", resetarParaInicio);
+ 
 // ---- Busca inicial ao carregar a página ----
 buscarAnimes("Frieren");
- 

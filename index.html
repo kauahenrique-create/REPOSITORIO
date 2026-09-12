@@ -10,11 +10,13 @@
 </head>
 <body>
 
-  <header class="topbar">
-    <div class="brand">
+ <header class="topbar">
+    <!-- Logo clicável para voltar ao início -->
+    <a href="#" id="btn-inicio" class="brand" aria-label="Voltar para a página inicial">
       <span class="brand-mark">案</span>
       <span class="brand-name">AniVault</span>
-    </div>
+    </a>
+
     <form id="form-busca" class="search-form" autocomplete="off">
       <input
         type="text"
@@ -23,6 +25,10 @@
         aria-label="Buscar anime"
       >
       <button type="submit" id="botao-buscar">Buscar</button>
+      <!-- Botão para limpar a busca e voltar à lista inicial -->
+      <button type="button" id="btn-limpar" class="btn-secundario" hidden title="Voltar ao início">
+        ← Voltar
+      </button>
     </form>
   </header>
 

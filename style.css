@@ -1,0 +1,337 @@
+:root {
+  --bg: #0B0F14;
+  --surface: #121820;
+  --surface-hover: #1A222D;
+  --border: #232C38;
+  --text: #EDEFF2;
+  --text-muted: #8C99A8;
+  --accent: #FF5D3A;
+  --accent-hover: #FF7A5C;
+  --gold: #FFC857;
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+ 
+* { box-sizing: border-box; }
+ 
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+ 
+a { color: var(--accent); }
+ 
+/* Topbar */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(11, 15, 20, 0.92);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+ 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: var(--accent);
+  color: #101418;
+  border-radius: 6px;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+ 
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+ 
+.search-form {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  max-width: 480px;
+  min-width: 240px;
+}
+ 
+#campo-busca {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+ 
+#campo-busca:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+ 
+#botao-buscar {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: #101418;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.15s ease;
+}
+ 
+#botao-buscar:hover { background: var(--accent-hover); }
+#botao-buscar:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+ 
+/* Remove o sublinhado padrão do link da logo */
+.brand {
+  text-decoration: none;
+  cursor: pointer;
+}
+ 
+/* Botão de voltar ao lado da busca */
+.btn-secundario {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+ 
+.btn-secundario:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+  border-color: var(--accent);
+}
+/* Hero */
+.hero {
+  padding: 40px 32px 8px;
+  max-width: 900px;
+}
+ 
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  margin: 0 0 6px;
+}
+ 
+.hero p {
+  color: var(--text-muted);
+  margin: 0;
+}
+ 
+/* Status (loading / erro / vazio) */
+.status-area {
+  margin: 24px 32px 0;
+  padding: 16px 18px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  max-width: 900px;
+}
+ 
+.status-area.erro {
+  border-color: #5C2A22;
+  color: #FFB4A2;
+  background: #1E1210;
+}
+ 
+/* Grid de resultados */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 28px 32px 60px;
+}
+ 
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+ 
+.card:hover, .card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+ 
+.card img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  background: #1A222D;
+}
+ 
+.card-body {
+  padding: 10px 12px 14px;
+}
+ 
+.card-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+ 
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+ 
+.card-score {
+  color: var(--gold);
+  font-weight: 600;
+}
+ 
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 10, 0.75);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  z-index: 100;
+}
+ 
+/* Sem esta regra, o "display: flex" acima vence o atributo [hidden]
+   e o modal fica visível (e bloqueando cliques) mesmo antes de abrir. */
+.modal-overlay[hidden] {
+  display: none;
+}
+ 
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  max-width: 720px;
+  width: 100%;
+  padding: 28px;
+  position: relative;
+}
+ 
+.modal-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+ 
+.modal-fechar:hover { color: var(--accent); }
+ 
+.modal-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 24px;
+}
+ 
+.modal-grid img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+ 
+.modal-grid h2 {
+  font-family: var(--font-display);
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+}
+ 
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+ 
+.tag {
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+ 
+.modal-stats {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+ 
+.modal-stats strong { color: var(--text); }
+ 
+.modal-synopsis {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+ 
+@media (max-width: 560px) {
+  .modal-grid { grid-template-columns: 1fr; }
+  .topbar { padding: 14px 18px; }
+  .hero { padding: 28px 18px 4px; }
+  .status-area { margin: 20px 18px 0; }
+  .grid { padding: 20px 18px 40px; }
+}
+ 
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--border);
+}
+ 
