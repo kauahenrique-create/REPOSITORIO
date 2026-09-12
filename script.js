@@ -63,18 +63,36 @@ function esperar(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
  
+// A MyMemory (plano gratuito) só aceita até 500 caracteres por consulta.
+const LIMITE_CARACTERES_TRADUCAO = 480;
+ 
 // Função auxiliar para traduzir a sinopse em inglês para português
 async function traduzirParaPT(texto) {
   if (!texto || texto === "Sinopse não disponível para este título.") return texto;
  
-  const textoLimpo = texto.replace(/<[^>]*>?/gm, '');
+  let textoLimpo = texto.replace(/<[^>]*>?/gm, '');
+ 
+  // Corta a sinopse se ela ultrapassar o limite aceito pela API,
+  // terminando em uma frase completa sempre que possível.
+  if (textoLimpo.length > LIMITE_CARACTERES_TRADUCAO) {
+    const cortado = textoLimpo.slice(0, LIMITE_CARACTERES_TRADUCAO);
+    const ultimoPonto = cortado.lastIndexOf(". ");
+    textoLimpo = ultimoPonto > 100 ? cortado.slice(0, ultimoPonto + 1) : cortado + "...";
+  }
  
   try {
     const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(textoLimpo)}&langpair=en|pt`);
     if (!res.ok) return textoLimpo;
  
     const json = await res.json();
-    return json.responseData?.translatedText || textoLimpo;
+    const traduzido = json.responseData?.translatedText;
+ 
+    // Se a API devolveu uma mensagem de erro em vez de uma tradução, usa o texto original.
+    if (!traduzido || /QUERY LENGTH LIMIT EXCEEDED/i.test(traduzido)) {
+      return textoLimpo;
+    }
+ 
+    return traduzido;
   } catch (erro) {
     console.error("Erro na tradução:", erro);
     return textoLimpo;
