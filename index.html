@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AniVault — Catálogo de Animes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+ <header class="topbar">
+    <!-- Logo clicável para voltar ao início -->
+    <a href="#" id="btn-inicio" class="brand" aria-label="Voltar para a página inicial">
+      <span class="brand-mark">案</span>
+      <span class="brand-name">AniVault</span>
+    </a>
+
+    <form id="form-busca" class="search-form" autocomplete="off">
+      <input
+        type="text"
+        id="campo-busca"
+        placeholder="Buscar anime... ex: Bleach, Naruto, Frieren"
+        aria-label="Buscar anime"
+      >
+      <button type="submit" id="botao-buscar">Buscar</button>
+      <!-- Botão para limpar a busca e voltar à lista inicial -->
+      <button type="button" id="btn-limpar" class="btn-secundario" hidden title="Voltar ao início">
+        ← Voltar
+      </button>
+    </form>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Encontre seu próximo anime</h1>
+      <p>Dados em tempo real via <a href="https://docs.anilist.co/" target="_blank" rel="noopener">AniList API</a>.</p>
+    </section>
+
+    <section id="status-area" class="status-area" hidden></section>
+
+    <section id="resultado" class="grid" aria-live="polite">
+      <!-- os cards de anime entram aqui via JS -->
+    </section>
+  </main>
+
+  <!-- Modal de detalhes -->
+  <div id="modal-overlay" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <button id="modal-fechar" class="modal-fechar" aria-label="Fechar">&times;</button>
+      <div id="modal-conteudo"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Projeto de estudo — dados fornecidos por <a href="https://anilist.co/" target="_blank" rel="noopener">AniList</a>. Não afiliado a AniList ou Crunchyroll.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
