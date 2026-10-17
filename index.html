@@ -10,7 +10,7 @@
 </head>
 <body>
 
- <header class="topbar">
+  <header class="topbar">
     <!-- Logo clicável para voltar ao início -->
     <a href="#" id="btn-inicio" class="brand" aria-label="Voltar para a página inicial">
       <span class="brand-mark">案</span>
@@ -38,6 +38,16 @@
       <p>Dados em tempo real via <a href="https://docs.anilist.co/" target="_blank" rel="noopener">AniList API</a>.</p>
     </section>
 
+    <!-- Seção de Meus Favoritos (Persistência com Supabase) -->
+    <section class="secao-favoritos" style="margin: 20px auto; max-width: 1200px; padding: 20px; background: #18191c; border-radius: 8px; border: 1px solid #2a2c30;">
+      <h2 style="color: #fff; font-family: 'Oswald', sans-serif; margin-bottom: 15px; font-size: 1.5rem; display: flex; align-items: center; gap: 8px;">
+        ⭐ Meus Animes Favoritos
+      </h2>
+      <div id="lista-favoritos" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-start;">
+        <p style="color: #888;">Carregando favoritos...</p>
+      </div>
+    </section>
+
     <section id="status-area" class="status-area" hidden></section>
 
     <section id="resultado" class="grid" aria-live="polite">
@@ -57,9 +67,6 @@
     <p>Projeto de estudo — dados fornecidos por <a href="https://anilist.co/" target="_blank" rel="noopener">AniList</a>. Não afiliado a AniList ou Crunchyroll.</p>
   </footer>
 
-  <script src="script.js"></script>
-  <!-- SDK do Supabase via CDN -->
-<!-- Substitua a chamada antiga do script.js por esta -->
-<script type="module" src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
