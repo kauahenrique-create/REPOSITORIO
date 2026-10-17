@@ -6,8 +6,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const API_URL = "https://graphql.anilist.co";
  
 // ---- Inicialização do Supabase ----
-const SUPABASE_URL = "SUA_PROJECT_URL_AQUI";
-const SUPABASE_KEY = "SUA_PUBLISHABLE_KEY_AQUI";
+const SUPABASE_URL = "https://ocvrqxonmhtjajrvyzwo.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Ln4c75pHqY1ikD2iiXFS7Q_ytENKKGL";
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
