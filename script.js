@@ -1,5 +1,7 @@
 // script.js — consome a AniList API (https://docs.anilist.co/) para buscar animes
 // A AniList usa GraphQL: fazemos um POST com uma query em vez de montar a URL.
+
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
  
 const API_URL = "https://graphql.anilist.co";
  
@@ -7,7 +9,7 @@ const API_URL = "https://graphql.anilist.co";
 const SUPABASE_URL = "SUA_PROJECT_URL_AQUI";
 const SUPABASE_KEY = "SUA_PUBLISHABLE_KEY_AQUI";
 
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const form = document.getElementById("form-busca");
 const campoBusca = document.getElementById("campo-busca");
@@ -128,7 +130,6 @@ async function listarFavoritos() {
   if (error) {
     console.error('Erro ao listar favoritos:', error);
   } else {
-    // Aqui você pode renderizar a sua lista de favoritos na interface quando quiser
     console.log("Favoritos carregados:", data);
   }
 }
