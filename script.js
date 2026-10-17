@@ -3,6 +3,12 @@
  
 const API_URL = "https://graphql.anilist.co";
  
+// ---- Inicialização do Supabase ----
+const SUPABASE_URL = "SUA_PROJECT_URL_AQUI";
+const SUPABASE_KEY = "SUA_PUBLISHABLE_KEY_AQUI";
+
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const form = document.getElementById("form-busca");
 const campoBusca = document.getElementById("campo-busca");
 const areaResultado = document.getElementById("resultado");
@@ -72,8 +78,6 @@ async function traduzirParaPT(texto) {
  
   let textoLimpo = texto.replace(/<[^>]*>?/gm, '');
  
-  // Corta a sinopse se ela ultrapassar o limite aceito pela API,
-  // terminando em uma frase completa sempre que possível.
   if (textoLimpo.length > LIMITE_CARACTERES_TRADUCAO) {
     const cortado = textoLimpo.slice(0, LIMITE_CARACTERES_TRADUCAO);
     const ultimoPonto = cortado.lastIndexOf(". ");
@@ -87,7 +91,6 @@ async function traduzirParaPT(texto) {
     const json = await res.json();
     const traduzido = json.responseData?.translatedText;
  
-    // Se a API devolveu uma mensagem de erro em vez de uma tradução, usa o texto original.
     if (!traduzido || /QUERY LENGTH LIMIT EXCEEDED/i.test(traduzido)) {
       return textoLimpo;
     }
@@ -99,6 +102,52 @@ async function traduzirParaPT(texto) {
   }
 }
  
+// ---- Funções CRUD do Supabase (Persistência) ----
+
+// CREATE — Salvar Anime nos Favoritos
+async function salvarFavorito(animeId, titulo, imagemUrl) {
+  const { data, error } = await supabaseClient
+    .from('favoritos')
+    .insert([{ anime_id: animeId, titulo: titulo, imagem_url: imagemUrl }]);
+
+  if (error) {
+    console.error('Erro ao guardar favorito:', error);
+  } else {
+    console.log('Favorito guardado com sucesso!');
+    listarFavoritos();
+  }
+}
+
+// READ — Listar Animes Favoritos
+async function listarFavoritos() {
+  const { data, error } = await supabaseClient
+    .from('favoritos')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Erro ao listar favoritos:', error);
+  } else {
+    // Aqui você pode renderizar a sua lista de favoritos na interface quando quiser
+    console.log("Favoritos carregados:", data);
+  }
+}
+
+// DELETE — Remover Anime dos Favoritos
+async function removerFavorito(id) {
+  const { error } = await supabaseClient
+    .from('favoritos')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Erro ao remover favorito:', error);
+  } else {
+    console.log('Favorito removido com sucesso!');
+    listarFavoritos();
+  }
+}
+
 // ---- Busca na API (com retry automático em erros temporários) ----
 const STATUS_TEMPORARIOS = [429, 502, 503, 504];
  
@@ -148,7 +197,6 @@ async function buscarAnimes(termo, tentativa = 1) {
       return;
     }
  
-    // AQUI ENTRA A REGRA DO BOTÃO VOLTAR:
     if (btnLimpar) {
       if (termo.toLowerCase() !== "frieren") {
         btnLimpar.hidden = false;
@@ -229,7 +277,6 @@ async function abrirModal(indice) {
   modalOverlay.hidden = false;
   modalFechar.focus();
  
-  // Traduz e atualiza o texto no modal
   const sinopseTraduzida = await traduzirParaPT(sinopseOriginal);
   const elementoSinopse = document.getElementById("synopsis-text");
   if (elementoSinopse) {
@@ -242,7 +289,6 @@ function fecharModal() {
   modalConteudo.innerHTML = "";
 }
  
-// ---- Função para resetar e voltar para o início ----
 function resetarParaInicio(evento) {
   if (evento) evento.preventDefault();
   campoBusca.value = "";
@@ -283,5 +329,8 @@ document.addEventListener("keydown", (evento) => {
 if (btnLimpar) btnLimpar.addEventListener("click", resetarParaInicio);
 if (btnInicio) btnInicio.addEventListener("click", resetarParaInicio);
  
-// ---- Busca inicial ao carregar a página ----
-buscarAnimes("Frieren");
+// ---- Inicialização ao carregar a página ----
+document.addEventListener('DOMContentLoaded', () => {
+  listarFavoritos();
+  buscarAnimes("Frieren");
+});
